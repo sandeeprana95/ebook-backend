@@ -7,10 +7,15 @@ mongoose.connect(process.env.DB_URL)
 .catch((err)=>console.log(err.message))
 
 import express from "express"
+import cors from 'cors'
 const app = express()
 app.listen(8080,()=>console.log("app is running on port 8080"))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true
+}))
 
 
 // Routes
