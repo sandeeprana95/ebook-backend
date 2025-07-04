@@ -66,3 +66,31 @@ export const login = Exc(async(req,res)=>{
  res.json({message:"login success"})
 
 })
+
+export const session = Exc(async(req,res)=>{
+	const {accessToken}= req.cookies
+	if(!accessToken)
+		return res.status(401).send("Unauthorized")
+
+	const user = await jwt.verify(accessToken,process.env.AUTH_SECRET)
+
+	res.json(user)
+})
+
+export const logout = Exc(async(req,res)=>{
+	res.cookie("accessToken",null,{
+		maxAge:0,
+		domain:process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+		secure:process.env.NODE_ENV === "dev" ? false : true
+	})
+
+	res.cookie("refreshToken",null,{
+		maxAge:0,
+		domain:process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+		secure : process.env.NODE_ENV === "dev" ? false : true,
+		httpOnly:true
+	})
+
+	res.json({message:"logout success"})
+
+})
