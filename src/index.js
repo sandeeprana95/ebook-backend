@@ -19,9 +19,11 @@ app.use(cors({
 
 
 // Routes
+import storageRouter from "./storage/storage.routes.js"
 import categoryRouter from "./category/category.routes.js"
 import userRouter from "./user/user.routes.js"
 
 
 app.use('/user',userRouter)
 app.use('/category',categoryRouter)
+app.use('/storage',storageRouter)
