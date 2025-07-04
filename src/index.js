@@ -19,7 +19,9 @@ app.use(cors({
 
 
 // Routes
+import categoryRouter from "./category/category.routes.js"
 import userRouter from "./user/user.routes.js"
 
 
 app.use('/user',userRouter)
+app.use('/category',categoryRouter)
