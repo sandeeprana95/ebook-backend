@@ -12,6 +12,7 @@ const app = express()
 app.listen(8080,()=>console.log("app is running on port 8080"))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
     origin:'http://localhost:5173',
     credentials:true
@@ -22,6 +23,7 @@ app.use(cors({
 import storageRouter from "./storage/storage.routes.js"
 import categoryRouter from "./category/category.routes.js"
 import userRouter from "./user/user.routes.js"
+import cookieParser from "cookie-parser"
 
 
 app.use('/user',userRouter)

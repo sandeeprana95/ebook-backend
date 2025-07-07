@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 const SIX_DAYS = 518400000
-const FOURTEEN_MINTUE = 84000
+const FOURTEEN_MINTUE = 14*60*1000
 
 const getToken = (user)=>{
 	const payload = {
@@ -53,6 +53,7 @@ export const login = Exc(async(req,res)=>{
  res.cookie('accessToken',accessToken,{
 	maxAge : FOURTEEN_MINTUE,
 	domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+	secure : process.env.NODE_ENV === "dev" ? false : true,
 	httpOnly : true
  })
 
@@ -72,20 +73,19 @@ export const session = Exc(async(req,res)=>{
 	if(!accessToken)
 		return res.status(401).send("Unauthorized")
 
-	const user = await jwt.verify(accessToken,process.env.AUTH_SECRET)
+	const user = jwt.verify(accessToken,process.env.AUTH_SECRET)
 
 	res.json(user)
 })
 
 export const logout = Exc(async(req,res)=>{
-	res.cookie("accessToken",null,{
-		maxAge:0,
+	res.clearCookie("accessToken",{
 		domain:process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
-		secure:process.env.NODE_ENV === "dev" ? false : true
+		secure:process.env.NODE_ENV === "dev" ? false : true,
+		httpOnly:true
 	})
 
-	res.cookie("refreshToken",null,{
-		maxAge:0,
+	res.clearCookie("refreshToken",{
 		domain:process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
 		secure : process.env.NODE_ENV === "dev" ? false : true,
 		httpOnly:true
