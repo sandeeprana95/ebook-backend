@@ -20,6 +20,7 @@ app.use(cors({
 
 
 // Routes
+import ebookRouter from "./ebook/ebook.routes.js"
 import storageRouter from "./storage/storage.routes.js"
 import categoryRouter from "./category/category.routes.js"
 import userRouter from "./user/user.routes.js"
@@ -29,3 +30,4 @@ import cookieParser from "cookie-parser"
 app.use('/user',userRouter)
 app.use('/category',categoryRouter)
 app.use('/storage',storageRouter)
+app.use('/ebook',ebookRouter)

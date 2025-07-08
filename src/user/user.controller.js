@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 const SIX_DAYS = 518400000
-const FOURTEEN_MINTUE = 14*60*1000
+const FOURTEEN_MINTUE = 14*60*60*1000
 
 const getToken = (user)=>{
 	const payload = {
@@ -14,7 +14,7 @@ const getToken = (user)=>{
 			role:user.role
 		}
 
-const accessToken =	jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"15m"})
+const accessToken =	jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"1d"})
 
 const refreshToken = jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"6d"})
 
