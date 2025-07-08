@@ -64,7 +64,10 @@ export const login = Exc(async(req,res)=>{
 	httpOnly : true
  })
 
- res.json({message:"login success"})
+ res.json({
+	message:"login success",
+	role:user.role   
+ })
 
 })
 
