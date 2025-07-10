@@ -35,6 +35,8 @@ const refreshToken = jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"6d"})
 export const login = Exc(async(req,res)=>{
 	const {email,password} = req.body
 	const user = await UserModel.findOne({email})
+console.log(user.role)
+
 	
 	if(!user)
 		return res.status(404).json({

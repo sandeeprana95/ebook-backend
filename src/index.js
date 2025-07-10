@@ -20,6 +20,7 @@ app.use(cors({
 
 
 // Routes
+import paymentRouter from "./payment/payment.routes.js"
 import ebookRouter from "./ebook/ebook.routes.js"
 import storageRouter from "./storage/storage.routes.js"
 import categoryRouter from "./category/category.routes.js"
@@ -31,3 +32,4 @@ app.use('/user',userRouter)
 app.use('/category',categoryRouter)
 app.use('/storage',storageRouter)
 app.use('/ebook',ebookRouter)
+app.use('/payment',paymentRouter)

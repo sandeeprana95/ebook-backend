@@ -1,9 +1,11 @@
 import EbookModel from "./ebook.model.js"
 import Exc from "../util/exc.util.js"
 	
- export const fetchEbook = Exc(async(req,res)=>{
-	const ebooks = await EbookModel.find().sort({createdAt:-1})
-	res.json(ebooks)
+ export const fetchEbook = Exc((req,res)=>{
+	setTimeout(async() => {
+		const ebooks = await EbookModel.find().sort({createdAt:-1})
+		res.json(ebooks)
+	}, 2000);
 	 
 })
 
