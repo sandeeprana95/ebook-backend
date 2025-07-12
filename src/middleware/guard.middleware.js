@@ -1,29 +1,34 @@
+ import Exc from "../util/exc.util.js"
  import jwt from "jsonwebtoken"
 
- export  const userGuard = async(req,res,next)=>{
-    try{
-         const { accessToken } = req.cookies
+ const expireSession=async(res)=>{
+    res.clearCookie("accessToken",{
+        domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+        secure : process.env.NODE_ENV === "dev" ? false : true ,
+        httpOnly : true
+    })
 
-         if(!accessToken)
-             return res.status(401).json({
-               message:"token is invalid"
-            }) 
-            
-        const user = jwt.verify(accessToken,process.env.AUTH_SECRET) 
+    res.clearCookie("refreshToken",{
+        domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+        secure : process.env.NODE_ENV === "dev" ? false : true ,
+        httpOnly : true
+    })
 
-        if(!user)
-            return res.status(403).json({message:"unauthorized"})
+    res.status(400).json({message : "Bad Request"})
+ }
 
-        if(user.role === "user")
-        
-        next()
+ export  const userGuard = Exc(async(req,res,next)=>{
+    const { accessToken } = req.cookies
 
-    }
-    catch(err)
-    {
-        console.log(err.message)
-        res.status(500).json({
-            message:err.message
-        })
-    }
-}
+    if(!accessToken)
+        return expireSession(res)
+
+    const payload = jwt.verify(accessToken,process.env.AUTH_SECRET)
+
+    if(payload.role !== "user")
+        return expireSession(res)
+
+    req.user = payload
+    next()
+
+ })

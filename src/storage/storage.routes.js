@@ -15,7 +15,7 @@ const upload = multer({
         const ext = arr[arr.length-1]
         next(null,`demo/${uniqueId()}.${ext}`)
     },
-    acl:"public-read"
+    acl:"public-read"  
 })
 
 
