@@ -22,7 +22,16 @@ const ebookSchema = new Schema({
   },
   thumbnail:{
     type:String
-  }
+  },
+  category:{
+    type:String,
+    required:true,
+    trim:true,
+    lowercase:true
+  },
+  ebook:[{
+    type:String
+  }]
 },{timestamps:true}) 
 	
 const EbookModel = model("Ebook",ebookSchema)

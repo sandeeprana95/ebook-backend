@@ -1,16 +1,21 @@
  import Exc from "../util/exc.util.js"
  import jwt from "jsonwebtoken"
+ import crypto from "crypto"
 
  const expireSession=async(res)=>{
     res.clearCookie("accessToken",{
         domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
-        secure : process.env.NODE_ENV === "dev" ? false : true ,
+        // secure : process.env.NODE_ENV === "dev" ? false : true ,
+        secure:true,
+        sameSite:"None",
         httpOnly : true
     })
 
     res.clearCookie("refreshToken",{
         domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
-        secure : process.env.NODE_ENV === "dev" ? false : true ,
+        // secure : process.env.NODE_ENV === "dev" ? false : true ,
+        secure:true,
+        sameSite:"None",
         httpOnly : true
     })
 
@@ -19,7 +24,7 @@
 
  export  const userGuard = Exc(async(req,res,next)=>{
     const { accessToken } = req.cookies
-
+    
     if(!accessToken)
         return expireSession(res)
 
@@ -27,8 +32,57 @@
 
     if(payload.role !== "user")
         return expireSession(res)
-
+    
     req.user = payload
     next()
 
+ })
+
+
+ export const adminGuard = Exc(async(req,res,next)=>{
+    const {accessToken} = req.cookies
+
+    if(!accessToken)
+        return expireSession(res)
+
+    const payload = jwt.verify(accessToken,process.env.AUTH_SECRET)
+
+    if(payload.role !== "admin")
+        return expireSession(res)
+
+    req.user = payload
+    next()
+ })
+
+
+ export const adminUserGuard = Exc(async(req,res,next)=>{
+       const {accessToken} = req.cookies
+
+       if(!accessToken)
+        return expireSession(res)
+
+       const payload = jwt.verify(accessToken,process.env.AUTH_SECRET)
+
+       if(payload.role !== "user" && payload.role !== "admin")
+          return expireSession(res)
+
+       next()
+ })
+
+
+
+ export const razorpayGuard=Exc(async(req,res,next)=>{
+    const razorpaySignature = req.headers['x-razorpay-signature']
+    console.log(razorpaySignature)
+    
+    if(!razorpaySignature && razorpaySignature === "undefined" )
+        return res.status(400).json({message:"Bad Request"})
+    
+    const payload = req.body
+    
+    const generatedSignature = crypto.createHmac("sha256",process.env.RAZORPAY_WEBHOOK_SECRET).update(JSON.stringify(payload)).digest("hex")
+
+    if(razorpaySignature !== generatedSignature)
+        return res.status(400).json({message:"Bad Request"})
+    next()
  })

@@ -35,8 +35,6 @@ const refreshToken = jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"6d"})
 export const login = Exc(async(req,res)=>{
 	const {email,password} = req.body
 	const user = await UserModel.findOne({email})
-console.log(user.role)
-
 	
 	if(!user)
 		return res.status(404).json({
@@ -54,16 +52,22 @@ console.log(user.role)
 
  res.cookie('accessToken',accessToken,{
 	maxAge : FOURTEEN_MINTUE,
-	domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
-	secure : process.env.NODE_ENV === "dev" ? false : true,
+	// domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+	// secure : process.env.NODE_ENV === "dev" ? false : true,
+	// domain:"localhost",
+	sameSite: "None",
+    secure: true,
 	httpOnly : true
  })
 
  res.cookie('refreshToken',refreshToken,{
 	maxAge : SIX_DAYS,
-	doamin : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN ,
-	secure : process.env.NODE_ENV === "dev" ? false : true , 
-	httpOnly : true
+	// doamin : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN ,
+	// secure : process.env.NODE_ENV === "dev" ? false : true , 
+	// domain:"localhost",
+	httpOnly : true,
+    secure: true,
+	sameSite: "None"
  })
 
  res.json({
@@ -75,6 +79,7 @@ console.log(user.role)
 
 export const session = Exc(async(req,res)=>{
 	const {accessToken}= req.cookies
+
 	if(!accessToken)
 		return res.status(401).send("Unauthorized")
 

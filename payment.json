@@ -1,0 +1,53 @@
+{
+  "entity": "event",
+  "account_id": "acc_PsGxwfWW0qybUl",
+  "event": "payment.captured",
+  "contains": [
+    "payment"
+  ],
+  "payload": {
+    "payment": {
+      "entity": {
+        "id": "pay_Qu88ZvyatSTNwE",
+        "entity": "payment",
+        "amount": 54000,
+        "currency": "INR",
+        "status": "captured",
+        "order_id": "order_Qu88S9VmKWPmvO",
+        "invoice_id": null,
+        "international": false,
+        "method": "netbanking",
+        "amount_refunded": 0,
+        "refund_status": null,
+        "captured": true,
+        "description": "c++ programming",
+        "card_id": null,
+        "bank": "CNRB",
+        "wallet": null,
+        "vpa": null,
+        "email": "sandeep@gmail.com",
+        "contact": "+919999999999",
+        "notes": {
+          "name": "sandeep",
+          "user": "686cea6b0e0321e2a84df6e1",
+          "ebook": "686e83adc6e4560ce1c6d2e7",
+          "discount": "10"
+        },
+        "fee": 1274,
+        "tax": 194,
+        "error_code": null,
+        "error_description": null,
+        "error_source": null,
+        "error_step": null,
+        "error_reason": null,
+        "acquirer_data": {
+          "bank_transaction_id": "7654272"
+        },
+        "created_at": 1752754356,
+        "reward": null,
+        "base_amount": 54000
+      }
+    }
+  },
+  "created_at": 1752754360
+}

@@ -17,7 +17,18 @@ import Exc from "../util/exc.util.js"
 
  export const updatebook = Exc(async(req,res)=>{
 	setTimeout(async() => {
-		const ebook = await EbookModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
+		const {fieldType} = req.query
+		const {id} = req.params
+		let body = req.body
+        console.log(req.query)
+		if(fieldType && fieldType === "array")
+			body = {$push:req.body}
+
+		console.log(body)
+		console.log(id)
+
+
+		const ebook = await EbookModel.findByIdAndUpdate(id,body,{new:true})
 		if(!ebook)
 			return res.status(404).json({message:"ebook not found"})
 
@@ -28,7 +39,8 @@ import Exc from "../util/exc.util.js"
 
  export const deleteEbook = Exc((req,res)=>{
 	setTimeout(async()=>{
-	 const ebook = await EbookModel.findByIdAndDelete(req.params.id)
+	 const {id} = req.params
+	 const ebook = await EbookModel.findByIdAndDelete(id)
 	 if(!ebook)
 		return res.status(404).json({message:"ebook not found"})
 
