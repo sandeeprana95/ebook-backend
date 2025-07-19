@@ -6,14 +6,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 	
  export const createFile =Exc(async(req,res)=>{
-	// console.log(req.file)
-	// const cmd = new PutObjectCommand({
-	// 	Bucket:process.env.BUCKET,
-	// 	Key:process.env.BUCKET_FOLDER,	
-	// })
-	// const data = await s3.send(cmd)
-	// // console.log(data)
-	// res.json(data)
 
 	res.json(req.file)
 })

@@ -66,6 +66,7 @@
        if(payload.role !== "user" && payload.role !== "admin")
           return expireSession(res)
 
+       req.user = payload
        next()
  })
 

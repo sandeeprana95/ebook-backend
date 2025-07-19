@@ -3,10 +3,12 @@ import mongoose, { Schema, model } from "mongoose"
 const orderSchema = new Schema({ 
   user:{
     type:mongoose.Types.ObjectId,
+    ref:"User",
     required:true
   },
   ebook:{
     type:mongoose.Types.ObjectId,
+    ref:"Ebook",
     required:true
   },
   paymentId:{

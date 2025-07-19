@@ -38,7 +38,8 @@ const paymentSuccess=Exc(async(req,res,next)=>{
             user:notes.user,
 			ebook:notes.ebook,
 			paymentId:id,
-			discount:Number(notes.discount)
+			discount:Number(notes.discount),
+			status:"success"
 	})
 
 	console.log(order)
@@ -54,7 +55,8 @@ const paymentFailed=Exc(async(req,res,next)=>{
 		user:notes.user,
 		ebook:notes.ebook,
 		paymentId:id,
-		discount:Number(notes.discount)
+		discount:Number(notes.discount),
+		status:"failed"
 	})
 
 	res.json({success:true})
