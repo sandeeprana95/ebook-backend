@@ -4,6 +4,7 @@ import multer from "multer"
 import multerS3 from "multer-s3"
 import { v4 as uniqueId } from "uuid"
 import s3 from "../util/s3.util.js"
+import { adminGuard, adminUserGuard } from "../middleware/guard.middleware.js"
 
 const storageRouter =  Router()
 
@@ -21,10 +22,10 @@ const upload = multer({
 })
 
 
-storageRouter.get("/",fetchStorage)
-storageRouter.post("/",upload.single("file"),createFile)
-storageRouter.post("/delete",deleteFile)
-storageRouter.post("/download",downloadFile)
+storageRouter.get("/",adminGuard,fetchStorage)
+storageRouter.post("/",adminGuard,upload.single("file"),createFile)
+storageRouter.post("/delete",adminGuard,deleteFile)
+storageRouter.post("/download",adminUserGuard,downloadFile)
 
 
 
