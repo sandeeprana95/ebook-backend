@@ -18,7 +18,6 @@ import Exc from "../util/exc.util.js"
 // Helper (webhook)
 export const createOrder = async(data)=>{
 	try{
-		console.log(data)
 		const order = new OrderModel(data)
         await order.save()
 		return order
