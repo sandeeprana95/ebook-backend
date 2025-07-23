@@ -13,6 +13,18 @@ const instance = new Razorpay({
 	key_secret:process.env.RAZORPAY_SECRET
 })
 	
+// helper (order controllers)
+export const fetchPaymentById=async(paymentId)=>{
+	try{
+		const payment  =instance.payments.fetch(paymentId)
+		return payment
+	}
+	catch(err){
+		return err
+	}
+
+}
+
 export const generateOrder = Exc(async(req,res)=>{
     const { ebookId } = req.body
 	const ebook = await ebookModel.findById(ebookId)
@@ -32,17 +44,17 @@ export const generateOrder = Exc(async(req,res)=>{
 
 
 const paymentSuccess=Exc(async(req,res,next)=>{
-	const { notes,id } = req.body.payload.payment.entity
+	console.log(req.body)
+	const { notes,id,amount } = req.body.payload.payment.entity
 
-	const order = await createOrder({
+	   await createOrder({
             user:notes.user,
 			ebook:notes.ebook,
 			paymentId:id,
 			discount:Number(notes.discount),
-			status:"success"
+			status:"success",
+			amount:(amount/100)
 	})
-
-	console.log(order)
 
 	res.json({success:true})
 	
@@ -50,13 +62,14 @@ const paymentSuccess=Exc(async(req,res,next)=>{
 
 const paymentFailed=Exc(async(req,res,next)=>{
 	const { notes,id } = req.body.paylod.payment.entity
-      console.log(notes)
-	const order = await createOrder({
+
+	await createOrder({
 		user:notes.user,
 		ebook:notes.ebook,
 		paymentId:id,
 		discount:Number(notes.discount),
-		status:"failed"
+		status:"failed",
+		amount:(amount/100)
 	})
 
 	res.json({success:true})

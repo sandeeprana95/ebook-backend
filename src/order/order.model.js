@@ -19,6 +19,10 @@ const orderSchema = new Schema({
     type:Number,
     default:0
   },
+  amount:{
+    type:Number,
+    required:true
+  },
   status:{
     type:String,
     enum:["success","failed"]

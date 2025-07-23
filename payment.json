@@ -1,51 +1,51 @@
 {
   "entity": "event",
   "account_id": "acc_PsGxwfWW0qybUl",
-  "event": "payment.failed",
+  "event": "payment.authorized",
   "contains": [
     "payment"
   ],
   "payload": {
     "payment": {
       "entity": {
-        "id": "pay_QursiBkq0sPftv",
+        "id": "pay_QwS7KialzvG7iv",
         "entity": "payment",
-        "amount": 37107,
+        "amount": 14550,
         "currency": "INR",
-        "status": "failed",
-        "order_id": "order_QursdYAhC82phU",
+        "status": "authorized",
+        "order_id": "order_QwS7FV9wAqhtKE",
         "invoice_id": null,
         "international": false,
         "method": "netbanking",
         "amount_refunded": 0,
         "refund_status": null,
         "captured": false,
-        "description": "css full course",
+        "description": "general knowledge",
         "card_id": null,
         "bank": "CNRB",
         "wallet": null,
         "vpa": null,
-        "email": "sonu@gmail.com",
+        "email": "sandeep@gmail.com",
         "contact": "+919999999999",
         "notes": {
-          "name": "sonu",
-          "user": "687b5ac3d0a23c6631f49737",
-          "ebook": "687b52cfdc8c0f1233a24e10",
-          "discount": "7"
+          "name": "sandeep",
+          "user": "687b4e2afed7f4ec15328f67",
+          "ebook": "687b5b023f647858ed689315",
+          "discount": "3"
         },
         "fee": null,
         "tax": null,
-        "error_code": "BAD_REQUEST_ERROR",
-        "error_description": "Your payment didn't go through as it was declined by the bank. Try another payment method or contact your bank.",
-        "error_source": "bank",
-        "error_step": "payment_authorization",
-        "error_reason": "payment_failed",
+        "error_code": null,
+        "error_description": null,
+        "error_source": null,
+        "error_step": null,
+        "error_reason": null,
         "acquirer_data": {
-          "bank_transaction_id": null
+          "bank_transaction_id": "5981286"
         },
-        "created_at": 1752915449
+        "created_at": 1753261398
       }
     }
   },
-  "created_at": 1752915452
+  "created_at": 1753261401
 }
