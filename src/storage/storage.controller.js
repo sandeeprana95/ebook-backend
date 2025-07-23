@@ -7,7 +7,11 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 	
  export const createFile =Exc(async(req,res)=>{
+	console.log(req.file)
+	res.json(req.file)
+})
 
+export const uploadPic = Exc(async(req,res)=>{
 	res.json(req.file)
 })
 

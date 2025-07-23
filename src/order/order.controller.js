@@ -15,7 +15,7 @@ import { fetchPaymentById } from "../payment/payment.controller.js"
 	 }
 	 
 	 else
-     orders = await OrderModel.find().sort({createdAt:-1}).populate("ebook").lean()
+     orders = await OrderModel.find().sort({createdAt:-1}).populate("ebook").populate("user","email fullname mobile -_id").lean()
 	 
 		for(let order of orders){
 			const payment = await fetchPaymentById(order.paymentId)

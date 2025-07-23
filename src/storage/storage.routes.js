@@ -1,4 +1,4 @@
-import { createFile, deleteFile, downloadFile, fetchStorage } from "./storage.controller.js"
+import { createFile, deleteFile, downloadFile, fetchStorage, uploadPic } from "./storage.controller.js"
 import { Router } from "express" 
 import multer from "multer"
 import multerS3 from "multer-s3"
@@ -13,17 +13,23 @@ const upload = multer({
         s3,
         bucket:process.env.BUCKET,
         key:(req,file,next)=>{
+             console.log(file)
+            const {fieldname} = file
+            const base = (fieldname === "file"? process.env.BUCKET_FOLDER : process.env.PIC_FOLDER)
             const arr = file.originalname.split(".")
             const ext = arr[arr.length-1]
-            next(null,`${process.env.BUCKET_FOLDER}/${uniqueId()}.${ext}`)
+            next(null,`${base}}/${uniqueId()}.${ext}`)
         },
-        acl:"public-read"  
+        acl:(req,file,next)=>{
+            next(null,file.fieldname === "file" ? "private" : "public-read")
+        } 
     }) 
 })
 
 
 storageRouter.get("/",adminGuard,fetchStorage)
 storageRouter.post("/",adminGuard,upload.single("file"),createFile)
+storageRouter.post("/upload-pic",adminUserGuard,upload.single("pic"),uploadPic)
 storageRouter.post("/delete",adminGuard,deleteFile)
 storageRouter.post("/download",adminUserGuard,downloadFile)
 

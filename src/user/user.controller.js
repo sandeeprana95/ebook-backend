@@ -104,3 +104,11 @@ export const logout = Exc(async(req,res)=>{
 	res.json({message:"logout success"})
 
 })
+
+
+export const updateImage= Exc(async(req,res)=>{
+	const {image} = req.body
+	console.log(image)
+	const data = await UserModel.findByIdAndUpdate(req.params.id,{image},{new:true})
+	res.json({message:"image updated success"})
+})

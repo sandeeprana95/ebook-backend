@@ -27,6 +27,9 @@ const userSchema = new Schema({
             type:String,
             default:"user",
             enum:["user"]
+        },
+        image:{
+            type:String
         }
    },{timestamps:true}) 
 
