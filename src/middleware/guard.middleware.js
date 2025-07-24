@@ -5,16 +5,16 @@
  const expireSession=async(res)=>{
     res.clearCookie("accessToken",{
         domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
-        // secure : process.env.NODE_ENV === "dev" ? false : true ,
-        secure:true,
+        secure : process.env.NODE_ENV === "dev" ? false : true ,
+        // secure:true,
         sameSite:"None",
         httpOnly : true
     })
 
     res.clearCookie("refreshToken",{
         domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
-        // secure : process.env.NODE_ENV === "dev" ? false : true ,
-        secure:true,
+        secure : process.env.NODE_ENV === "dev" ? false : true ,
+        // secure:true,
         sameSite:"None",
         httpOnly : true
     })
@@ -86,4 +86,22 @@
     if(razorpaySignature !== generatedSignature)
         return res.status(400).json({message:"Bad Request"})
     next()
+ })
+
+
+ export const refreshTokenGuard=Exc(async(req,res,next)=>{
+        const {refreshToken} = req.cookies
+        console.log(refreshToken)
+
+        if(!refreshToken)
+           return  expireSession(res)
+
+        const payload = jwt.verify(refreshToken,process.env.RT_SECRET)
+        
+        if(payload.role !== "user" && payload.role !== "admin")
+            return expireSession(res)
+
+        req.user = payload
+        next()
+
  })

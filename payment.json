@@ -1,26 +1,26 @@
 {
   "entity": "event",
   "account_id": "acc_PsGxwfWW0qybUl",
-  "event": "payment.authorized",
+  "event": "payment.captured",
   "contains": [
     "payment"
   ],
   "payload": {
     "payment": {
       "entity": {
-        "id": "pay_QwUVldIhjfjsJu",
+        "id": "pay_QwS7KialzvG7iv",
         "entity": "payment",
-        "amount": 53760,
+        "amount": 14550,
         "currency": "INR",
-        "status": "authorized",
-        "order_id": "order_QwUVgEc0zTMYbt",
+        "status": "captured",
+        "order_id": "order_QwS7FV9wAqhtKE",
         "invoice_id": null,
         "international": false,
         "method": "netbanking",
         "amount_refunded": 0,
         "refund_status": null,
-        "captured": false,
-        "description": "mathematics",
+        "captured": true,
+        "description": "general knowledge",
         "card_id": null,
         "bank": "CNRB",
         "wallet": null,
@@ -29,23 +29,25 @@
         "contact": "+919999999999",
         "notes": {
           "name": "sandeep",
-          "user": "6880c53fdafe086de5ea312a",
-          "ebook": "687b5bec3f647858ed689323",
-          "discount": "4"
+          "user": "687b4e2afed7f4ec15328f67",
+          "ebook": "687b5b023f647858ed689315",
+          "discount": "3"
         },
-        "fee": null,
-        "tax": null,
+        "fee": 343,
+        "tax": 52,
         "error_code": null,
         "error_description": null,
         "error_source": null,
         "error_step": null,
         "error_reason": null,
         "acquirer_data": {
-          "bank_transaction_id": "5725331"
+          "bank_transaction_id": "5981286"
         },
-        "created_at": 1753269829
+        "created_at": 1753261398,
+        "reward": null,
+        "base_amount": 14550
       }
     }
   },
-  "created_at": 1753269832
+  "created_at": 1753261401
 }

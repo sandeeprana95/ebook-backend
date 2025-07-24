@@ -11,12 +11,13 @@ const getToken = (user)=>{
 			id:user._id,
 			fullname:user.fullname,
 			email:user.email,
-			role:user.role
+			role:user.role,
+			image:user.image ? user.image : null
 		}
 
 const accessToken =	jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"1d"})
 
-const refreshToken = jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:"6d"})
+const refreshToken = jwt.sign(payload,process.env.RT_SECRET,{expiresIn:"6d"})
 
 	return{
 		accessToken,
@@ -111,4 +112,28 @@ export const updateImage= Exc(async(req,res)=>{
 	console.log(image)
 	const data = await UserModel.findByIdAndUpdate(req.params.id,{image},{new:true})
 	res.json({message:"image updated success"})
+})
+
+
+export const refreshToken=Exc(async(req,res)=>{
+	const user = await UserModel.findById(req.user.id)
+
+	const {accessToken,refreshToken} = getToken(user)
+
+	res.cookie("accessToken",accessToken,{
+		maxAge:FOURTEEN_MINTUE,
+		domain:process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+		secure : process.env.NODE_ENV === "dev" ? false : true,
+		httpOnly:true
+	})
+
+	res.cookie("refreshToken",refreshToken,{
+		maxAge:SIX_DAYS,
+		domain : process.env.NODE_ENV === "dev" ? "localhost" : process.env.DOMAIN,
+		secure : process.env.NODE_ENV === "dev" ? false : true,
+		httpOnly : true
+	})
+
+	res.json({message:"token refresh success"})
+
 })
