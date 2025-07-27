@@ -2,6 +2,7 @@ import UserModel from "./user.model.js"
 import Exc from "../util/exc.util.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import emailSetup from "../util/emailSetup.js"
 
 const SIX_DAYS = 518400000
 const FOURTEEN_MINTUE = 14*60*60*1000
@@ -73,7 +74,7 @@ export const login = Exc(async(req,res)=>{
 
  res.json({
 	message:"login success",
-	role:user.role   
+	role:user.role
  })
 
 })
@@ -133,7 +134,17 @@ export const refreshToken=Exc(async(req,res)=>{
 		secure : process.env.NODE_ENV === "dev" ? false : true,
 		httpOnly : true
 	})
-
 	res.json({message:"token refresh success"})
+})
 
+export const forgotPassword = Exc(async(req,res)=>{
+	const {email} = req.body
+	const user = await UserModel.findOne({email})
+	
+	if(!user)
+		return res.status(404).json({message:"email sending failed"})
+
+	const token = jwt.sign(user._id,process.env.FORGOT_PASSWORD_SECRET,{expiresIn:"14m"})
+
+	 emailSetup(email,"Ebook - Forgot Password !")
 })
