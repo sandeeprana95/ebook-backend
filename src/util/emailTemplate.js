@@ -1,4 +1,6 @@
-const ForgotPasswordTemplate = (link) => {
+
+const ForgotPasswordTemplate = (link,fullname) => {
+    
     return (     
                ` <!DOCTYPE html>
                 <html lang="en">
@@ -41,10 +43,10 @@ const ForgotPasswordTemplate = (link) => {
                 <body>
                 <div class="email-container">
                     <h2>Password Reset Request</h2>
-                    <p>Hello,</p>
+                    <p style="text-transform:capitalize" >Hello,${fullname}</p>
                     <p>You requested a link to reset your password. Click the button below to choose a new one:</p>
                     
-                    <a href="${process.env.DOMAIN}?token" class="button" style="color:white" >Reset Password</a>
+                    <a href="${link}" class="button" style="color:white" >Reset Password</a>
 
                     <p>If you didn’t request this, you can safely ignore this email.</p>
                     <p>This link will expire in 24 hours.</p>

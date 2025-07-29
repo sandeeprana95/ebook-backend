@@ -7,7 +7,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 	
  export const createFile =Exc(async(req,res)=>{
-	console.log(req.file)
 	res.json(req.file)
 })
 
@@ -27,14 +26,12 @@ export const fetchStorage=Exc(async(req,res)=>{
 
 export const deleteFile = Exc(async(req,res)=>{
 	const {path}= req.body
-	console.log(path)
 	const cmd = new DeleteObjectCommand({
 		Bucket:process.env.BUCKET,
 		Key:path
 	})
 
 	const data = await s3.send(cmd)
-	console.log(data)
 
 	res.json({data,message:"file deleted successfully"})
 })

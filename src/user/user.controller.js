@@ -110,7 +110,6 @@ export const logout = Exc(async(req,res)=>{
 
 export const updateImage= Exc(async(req,res)=>{
 	const {image} = req.body
-	console.log(image)
 	const data = await UserModel.findByIdAndUpdate(req.params.id,{image},{new:true})
 	res.json({message:"image updated success"})
 })
@@ -138,13 +137,44 @@ export const refreshToken=Exc(async(req,res)=>{
 })
 
 export const forgotPassword = Exc(async(req,res)=>{
-	const {email} = req.body
-	const user = await UserModel.findOne({email})
-	
-	if(!user)
-		return res.status(404).json({message:"email sending failed"})
 
-	const token = jwt.sign(user._id,process.env.FORGOT_PASSWORD_SECRET,{expiresIn:"14m"})
+	setTimeout(async() => {
+		const {email} = req.body
+		const user = await UserModel.findOne({email})
+		
+		if(!user)
+			return res.status(404).json({message:"User doesn't exist"})
 
-	 emailSetup(email,"Ebook - Forgot Password !")
+		const token = jwt.sign({id:user._id},process.env.FORGOT_PASSWORD_SECRET,{expiresIn:"14m"})
+		const link = `${process.env.DOMAIN}/forgot-password?token=${token}`
+
+		emailSetup(email,"Ebook - Forgot Password !",link,user.fullname)
+
+		res.json({message:"mail sent successfully"})
+
+	}, 3000);
+
+})
+
+export const forgotSession=Exc(async(req,res)=>{
+	res.json({message:"Verification Success"})
+})
+
+
+export const updatePassword = Exc(async(req,res)=>{
+	const {id} = req.user
+	const {password} = req.body
+
+	const encrypted = await bcrypt.hash(password.toString(),12)
+
+	setTimeout(async() => {
+		
+		const user = await UserModel.findByIdAndUpdate(id,{password:encrypted},{new:true})
+				
+		if(!user)
+			return res.status(424).json({message:"Failed to change password"})
+		
+		res.json({message:"Password Changed"})
+		
+	}, 4000);
 })

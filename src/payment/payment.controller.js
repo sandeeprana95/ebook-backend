@@ -16,7 +16,7 @@ const instance = new Razorpay({
 // helper (order controllers)
 export const fetchPaymentById=async(paymentId)=>{
 	try{
-		const payment  =instance.payments.fetch(paymentId)
+		const payment  = instance.payments.fetch(paymentId)
 		return payment
 	}
 	catch(err){
@@ -44,7 +44,6 @@ export const generateOrder = Exc(async(req,res)=>{
 
 
 const paymentSuccess=Exc(async(req,res,next)=>{
-	console.log(req.body)
 	const { notes,id,amount } = req.body.payload.payment.entity
 
 	   await createOrder({

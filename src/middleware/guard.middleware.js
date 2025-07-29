@@ -91,7 +91,6 @@
 
  export const refreshTokenGuard=Exc(async(req,res,next)=>{
         const {refreshToken} = req.cookies
-        console.log(refreshToken +"hello")
 
         if(!refreshToken)
            return  expireSession(res)
@@ -103,5 +102,29 @@
 
         req.user = payload
         next()
+
+ })
+
+
+ export const forgotSessionGuard=Exc(async(req,res,next)=>{
+
+  const authorization = req.headers.authorization
+
+  if(!authorization)
+       return res.status(400).json({message:"Bad Request"})
+
+  const [type,token ] = authorization.split(" ")
+
+  if(type !== "Bearer")
+     return res.status(400).json({message:"Bad Request"})
+
+  const user = jwt.verify(token , process.env.FORGOT_PASSWORD_SECRET)
+
+  if(!user)
+    return res.status(401).json({message:"verification failed"})
+
+  req.user = user
+
+  next()
 
  })

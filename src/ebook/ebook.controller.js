@@ -20,13 +20,8 @@ import Exc from "../util/exc.util.js"
 		const {fieldType} = req.query
 		const {id} = req.params
 		let body = req.body
-        console.log(req.query)
 		if(fieldType && fieldType === "array")
 			body = {$push:req.body}
-
-		console.log(body)
-		console.log(id)
-
 
 		const ebook = await EbookModel.findByIdAndUpdate(id,body,{new:true})
 		if(!ebook)

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer"
 import ForgotPasswordTemplate from "./emailTemplate.js"
 
 
-const emailSetup=(email,subject)=>{
+const emailSetup=(email,subject,link,fullname)=>{
 try{
 
 const smtpEmail = nodemailer.createTransport({
@@ -17,7 +17,7 @@ const mailOptions = {
         from :process.env.SMTP_EMAIL,
         to:email,
         subject:subject,
-        html:ForgotPasswordTemplate()
+        html:ForgotPasswordTemplate(link,fullname)
     }
 
 
