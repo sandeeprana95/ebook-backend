@@ -18,7 +18,7 @@ const app = express();
 
 // ✅ Middleware Setup
 app.use(cors({
-  origin: 'http://ebook-ui-9bwm.vercel.app/', 
+  origin: '*', 
   credentials: true
 }));
 
