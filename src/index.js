@@ -7,7 +7,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // Database Connection
-const PORT = 8080;
+const PORT = process.env.PORT ? process.env.PORT : 8080
 
 mongoose.connect(process.env.DB_URL)
   .then(() => console.log("✅ DB connected"))
