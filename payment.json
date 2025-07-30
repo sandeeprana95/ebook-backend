@@ -1,26 +1,26 @@
 {
   "entity": "event",
   "account_id": "acc_PsGxwfWW0qybUl",
-  "event": "payment.captured",
+  "event": "payment.failed",
   "contains": [
     "payment"
   ],
   "payload": {
     "payment": {
       "entity": {
-        "id": "pay_QwS7KialzvG7iv",
+        "id": "pay_QyvtoEnydJHTmk",
         "entity": "payment",
-        "amount": 14550,
+        "amount": 35112,
         "currency": "INR",
-        "status": "captured",
-        "order_id": "order_QwS7FV9wAqhtKE",
+        "status": "failed",
+        "order_id": "order_QyvtiXJLDWWJwi",
         "invoice_id": null,
         "international": false,
         "method": "netbanking",
         "amount_refunded": 0,
         "refund_status": null,
-        "captured": true,
-        "description": "general knowledge",
+        "captured": false,
+        "description": "css ( cascading style sheet )",
         "card_id": null,
         "bank": "CNRB",
         "wallet": null,
@@ -29,25 +29,23 @@
         "contact": "+919999999999",
         "notes": {
           "name": "sandeep",
-          "user": "687b4e2afed7f4ec15328f67",
-          "ebook": "687b5b023f647858ed689315",
-          "discount": "3"
+          "user": "6888c2b73e57b9a4ecf0ba7f",
+          "ebook": "6888c39578b953aae191139a",
+          "discount": "12"
         },
-        "fee": 343,
-        "tax": 52,
-        "error_code": null,
-        "error_description": null,
-        "error_source": null,
-        "error_step": null,
-        "error_reason": null,
+        "fee": null,
+        "tax": null,
+        "error_code": "BAD_REQUEST_ERROR",
+        "error_description": "Your payment didn't go through as it was declined by the bank. Try another payment method or contact your bank.",
+        "error_source": "bank",
+        "error_step": "payment_authorization",
+        "error_reason": "payment_failed",
         "acquirer_data": {
-          "bank_transaction_id": "5981286"
+          "bank_transaction_id": null
         },
-        "created_at": 1753261398,
-        "reward": null,
-        "base_amount": 14550
+        "created_at": 1753802959
       }
     }
   },
-  "created_at": 1753261401
+  "created_at": 1753802961
 }

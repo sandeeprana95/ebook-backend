@@ -46,7 +46,7 @@ export const generateOrder = Exc(async(req,res)=>{
 const paymentSuccess=Exc(async(req,res,next)=>{
 	const { notes,id,amount } = req.body.payload.payment.entity
 
-	   await createOrder({
+	     await createOrder({
             user:notes.user,
 			ebook:notes.ebook,
 			paymentId:id,

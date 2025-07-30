@@ -74,7 +74,6 @@
 
  export const razorpayGuard=Exc(async(req,res,next)=>{
     const razorpaySignature = req.headers['x-razorpay-signature']
-    console.log(razorpaySignature)
     
     if(!razorpaySignature && razorpaySignature === "undefined" )
         return res.status(400).json({message:"Bad Request"})
